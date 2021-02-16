@@ -11,7 +11,6 @@ from aiogram.utils.exceptions import Throttled
 
 import messages as msg
 from api import get_post_id_from_json, get_final_message
-from deepln import translate
 from config import TOKEN
 
 
@@ -26,13 +25,6 @@ dp.middleware.setup(LoggingMiddleware())
 button = ReplyKeyboardMarkup(resize_keyboard=True)
 button.add(KeyboardButton('🎲🎲'))
 button.add(KeyboardButton('Как добавить свою запись?'))
-
-
-@dp.message_handler(commands=['deepln'])
-async def process_help_command(message: types.Message):
-	text = message.get_full_command()
-	resp = await translate(text[1])
-	await message.reply(resp)
 
 
 @dp.message_handler(commands=['start'])
