@@ -46,3 +46,18 @@ async def get_data_deepln(text, source_lang = 'EN', targer_lang = 'RU'):
     except aiohttp.ClientError as e:
         logging.error(e)
         return False
+
+
+async def decode_translate_response(data):
+    """Миниатюрная функция декодера"""
+    # data = str(data).replace('\'', '"').lower()
+    # json_data = loads(data)
+    return data
+
+
+async def translate(text):
+    """Основная функция перевода для более удобного использования"""
+    prepare = await get_data_deepln(text)
+    result = await decode_translate_response(prepare)
+    return result
+
