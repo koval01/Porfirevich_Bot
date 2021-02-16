@@ -42,7 +42,7 @@ async def get_data_deepln(text, source_lang = 'EN', targer_lang = 'RU'):
     try:
         async with aiohttp.ClientSession() as session:
             async with session.post(DEEP_LN_URL, headers=headers, json=json_cascade) as resp:
-                return loads(await resp.text())
+                return await resp.text()
     except aiohttp.ClientError as e:
         logging.error(e)
         return False
@@ -50,9 +50,9 @@ async def get_data_deepln(text, source_lang = 'EN', targer_lang = 'RU'):
 
 async def decode_translate_response(data):
     """Миниатюрная функция декодера"""
-    # data = str(data).replace('\'', '"').lower()
-    # json_data = loads(data)
-    return data
+    data = str(data).replace('\'', '"').lower()
+    json_data = loads(data)
+    return json_data
 
 
 async def translate(text):
