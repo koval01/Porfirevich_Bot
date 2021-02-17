@@ -23,6 +23,15 @@ async def prepare_data(data):
         return i
 
 
+async def short_title_get(text):
+    """Функция для создания заголовка inline истории"""
+    result = text[:32]
+    if len(text) > 32:
+        result = result + '...'
+    result = await delete_tags_from_string(result)
+    return result
+
+
 async def decode_story_string(array):
     """Декодер текста записи"""
     struct_array = []
@@ -41,9 +50,26 @@ async def get_post_media_from_json(data):
     return result
 
 
-async def get_final_message():
+async def cut_message(message):
+    """Функция для обрезания сообщения если оно слишком длинное"""
+    if len(message) > 4000:
+        return message[:4000] + '...'
+    return message
+
+
+async def delete_tags_from_string(message):
+    """Функция которая удаляет теги из сообщения"""
+    tags = ['i', 'b', 'u']
+    text = message
+    for i in tags:
+        text = text.replace(f'<{i}>', '').replace(f'</{i}>', '')
+    return text
+
+
+async def get_final_message(inline = False):
+    """Итоговый вариант сообщения"""
     data = await get_data()
     data = await prepare_data(data)
-    message, link = await msg.foramatted_message(data)
+    message, link = await msg.foramatted_message(data, inline)
     message = await msg.fix_string(message)
     return message, link

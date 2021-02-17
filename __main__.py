@@ -1,4 +1,5 @@
 import logging
+from random import randint
 from asyncio import get_event_loop
 
 from aiogram import Bot, types
@@ -6,12 +7,14 @@ from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.contrib.middlewares.logging import LoggingMiddleware
 from aiogram.dispatcher import Dispatcher
 from aiogram.utils import executor
+from aiogram.types import InlineQuery, InlineQueryResultArticle, InputTextMessageContent
 from aiogram.utils.exceptions import Throttled
 
+import hashlib
 import messages as msg
-from api import get_post_media_from_json, get_final_message
+
+from api import get_post_media_from_json, get_final_message, short_title_get
 from quotes_api import get_quote
-from random import randint
 from buttons import button_main_menu as button
 from config import TOKEN, LOGGING_CONFIG
 
@@ -32,6 +35,23 @@ async def process_start_command(message: types.Message):
 @dp.message_handler(commands=['help'])
 async def process_help_command(message: types.Message):
 	await message.reply(msg.help_message, reply_markup=button)
+
+
+@dp.inline_handler()
+async def inline_echo(inline_query: InlineQuery):
+	text = str(inline_query.query)
+	result_id: str = hashlib.md5(text.encode()).hexdigest()
+	message, link = await get_final_message(inline=True)
+	input_content = InputTextMessageContent(message)
+	short_title = await short_title_get(message)
+	item = InlineQueryResultArticle(
+		id=result_id,
+		title=f'{short_title!r}',
+		description=msg.inline_story,
+		input_message_content=input_content,
+		reply_markup=link,
+	)
+	await bot.answer_inline_query(inline_query.id, results=[item], cache_time=0)
 
 
 @dp.callback_query_handler(lambda call_back: call_back.data == 'get_photo_button')
