@@ -1,12 +1,12 @@
 import aiohttp
 import logging
 from bs4 import BeautifulSoup
-from config import QUOTES_API_URL
+from config import QUOTES_API_URL, USER_AGENT
 
 
 async def get_data_quote():
     """Функция получения данных"""
-    headers = {"user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.23 Safari/537.36"}
+    headers = {"user-agent": USER_AGENT}
     try:
         async with aiohttp.ClientSession() as session:
             async with session.post(QUOTES_API_URL, headers=headers) as resp:

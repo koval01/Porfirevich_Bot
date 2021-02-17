@@ -2,12 +2,12 @@ import aiohttp
 import logging
 from json import loads
 from time import time
-from config import DEEP_LN_URL
+from config import DEEP_LN_URL, USER_AGENT
 
 
 async def get_data_deepln(text, source_lang = 'EN', targer_lang = 'RU'):
     """Функция получения данных от DeepLn"""
-    headers = {"user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.23 Safari/537.36"}
+    headers = {"user-agent": USER_AGENT}
     json_cascade = {
           "jsonrpc": "2.0",
           "method": "LMT_handle_jobs",

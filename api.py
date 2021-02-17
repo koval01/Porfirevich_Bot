@@ -1,13 +1,13 @@
 import aiohttp
 import logging
 import messages as msg
-from config import API_URL
+from config import API_URL, USER_AGENT
 from json import loads
 
 
 async def get_data():
     """Функция получения данных"""
-    headers = {"user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.23 Safari/537.36"}
+    headers = {"user-agent": USER_AGENT}
     try:
         async with aiohttp.ClientSession() as session:
             async with session.get(API_URL, headers=headers) as resp:
