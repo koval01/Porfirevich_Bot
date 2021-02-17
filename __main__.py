@@ -10,6 +10,8 @@ from aiogram.utils.exceptions import Throttled
 
 import messages as msg
 from api import get_post_id_from_json, get_final_message
+from quotes_api import get_quote
+from random import randint
 from buttons import button_main_menu as button
 from config import TOKEN, LOGGING_CONFIG
 
@@ -62,22 +64,33 @@ async def process_callback_button1(callback_query: types.CallbackQuery):
 @dp.message_handler(content_types=['text'])
 async def handle_message_received(message_telegram):
 	# Если пользователь пишет чаще чем раз в 0.3 секунды, то отправляем ему сообщение с прозьбой не флудить
-	try: await dp.throttle('text', rate=0.3)
+	try:
+		await dp.throttle('text', rate=0.3)
 	except Throttled:
 		# Если пользователь продолжит флудить, то просто игнорируем его
-		try: await dp.throttle('text_', rate=0.5)
-		except Throttled: pass
-		else: await message_telegram.reply(msg.rate_limit)
+		try:
+			await dp.throttle('text_', rate=0.5)
+		except Throttled:
+			pass
+		else:
+			await message_telegram.reply(msg.rate_limit)
 	else:
 		if message_telegram.text == '🎲🎲':
 			await bot.send_chat_action(message_telegram.chat.id, "typing")
 			message, link = await get_final_message()
 			try:
 				await message_telegram.reply(message, reply_markup=link)
-			except:
+			except Exception as e:
 				# Вторая попытка получить запись
+				logging.warning(e)
 				message, link = await get_final_message()
 				await message_telegram.reply(message, reply_markup=link)
+			if randint(0, 100) > 80:
+				try:
+					q_text = await get_quote()
+					await message_telegram.answer(q_text, disable_web_page_preview=True)
+				except Exception as e:
+					logging.error('Error sending quote (%s)' % e)
 
 		elif message_telegram.text == 'Как добавить свою запись?':
 			await message_telegram.reply(msg.info_text, reply_markup=msg.website_link)
