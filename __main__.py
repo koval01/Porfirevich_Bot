@@ -37,7 +37,7 @@ async def process_help_command(message: types.Message):
 @dp.callback_query_handler(lambda call_back: call_back.data == 'get_photo_button')
 async def process_callback_button1(callback_query: types.CallbackQuery):
 	try:
-		await dp.throttle('text', rate=0.5)
+		await dp.throttle('text', rate=0.8)
 	except Throttled:
 		# Если пользователь продолжит флудить, то просто игнорируем его
 		try:

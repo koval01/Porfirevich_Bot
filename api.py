@@ -1,4 +1,5 @@
 import aiohttp
+import logging
 import messages as msg
 from config import API_URL
 from json import loads
@@ -12,6 +13,7 @@ async def get_data():
             async with session.get(API_URL, headers=headers) as resp:
                 return loads(await resp.text())
     except aiohttp.ClientError as e:
+        logging.error(e)
         return False
 
 
