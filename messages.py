@@ -1,4 +1,5 @@
 from api import decode_story_string as decoder
+from buttons import create_inline_buttons
 import regex as re
 
 
@@ -19,7 +20,9 @@ error_command = 'Что-что? Я тебя не понял...'
 
 info_text = 'Для того, чтобы опубликовать свою историю, перейдите пожалуйста на сайт Порфирьевича.'
 
-website_link = '{"inline_keyboard": [[{"text": "Перейти на сайт", "url": "https://porfirevich.ru/"}], [{"text": "Получить фото", "callback_data": "get_photo_button"}]]}'
+website_link = create_inline_buttons(
+    {"text": "Перейти на сайт", "url": "https://porfirevich.ru/"},
+)
 
 commands_main_menu = [
     '🎲🎲',
@@ -31,7 +34,10 @@ async def foramatted_message(data):
     """Формирование сообщения для пользователя"""
     text = await decoder(data['content'])
     likes = data['likesCount']
-    link = '{"inline_keyboard": [[{"text": "Посмотреть на сайте", "url": "https://porfirevich.ru/'+data['id']+'"}], [{"text": "Получить фото", "callback_data": "get_photo_button"}]]}'
+    link = create_inline_buttons(
+        {"text": "Посмотреть на сайте", "url": f"https://porfirevich.ru/{data['id']}"},
+        {"text": "Получить фото", "callback_data": "get_photo_button"},
+    )
     if len(text) > 4000: text[:4000]+'...'
     result = f'{text}\n{likes}❤️'
     return result, link
