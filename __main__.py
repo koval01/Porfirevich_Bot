@@ -75,7 +75,7 @@ async def handle_message_received(message_telegram):
 			try:
 				await message_telegram.reply(message, reply_markup=link)
 			except:
-				# Повторна спроба
+				# Вторая попытка получить запись
 				message, link = await get_final_message()
 				await message_telegram.reply(message, reply_markup=link)
 
