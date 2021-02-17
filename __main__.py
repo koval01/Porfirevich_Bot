@@ -49,7 +49,10 @@ async def process_callback_button1(callback_query: types.CallbackQuery):
 				callback_query.from_user.id, msg.rate_limit
 			)
 	else:
-		await bot.answer_callback_query(callback_query.id)
+		await bot.answer_callback_query(
+			callback_query.id,
+			text=msg.sending_photo,
+		)
 		await bot.send_chat_action(callback_query.from_user.id, 'upload_photo')
 		photo_data = await get_post_id_from_json(callback_query.message.reply_markup)
 		me = await bot.get_me()
