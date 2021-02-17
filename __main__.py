@@ -5,26 +5,21 @@ from aiogram import Bot, types
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.contrib.middlewares.logging import LoggingMiddleware
 from aiogram.dispatcher import Dispatcher
-from aiogram.types import KeyboardButton, ReplyKeyboardMarkup, InlineKeyboardButton, InlineKeyboardMarkup
 from aiogram.utils import executor
 from aiogram.utils.exceptions import Throttled
 
 import messages as msg
 from api import get_post_id_from_json, get_final_message
-from config import TOKEN
+from buttons import button_main_menu as button
+from config import TOKEN, LOGGING_CONFIG
 
 
-logging.basicConfig(format=u'%(filename)+13s [ LINE:%(lineno)-4s] %(levelname)-8s [%(asctime)s] %(message)s', level=logging.INFO)
+logging.basicConfig(format=LOGGING_CONFIG, level=logging.INFO)
 loop = get_event_loop()
 bot = Bot(token=TOKEN, parse_mode='HTML')
 storage = MemoryStorage()
 dp = Dispatcher(bot, loop=loop, storage=storage)
 dp.middleware.setup(LoggingMiddleware())
-
-
-button = ReplyKeyboardMarkup(resize_keyboard=True)
-button.add(KeyboardButton('🎲🎲'))
-button.add(KeyboardButton('Как добавить свою запись?'))
 
 
 @dp.message_handler(commands=['start'])
