@@ -31,8 +31,8 @@ async def decode_story_string(array):
     return ''.join(struct_array)
 
 
-async def get_post_id_from_json(data):
-    """Функція для отримання ID запису з JSON структури сутностей повідомлення"""
+async def get_post_media_from_json(data):
+    """Функция получения ID записи. Функция возвращает готовую ссылку на фото"""
     json = loads(str(data))
     json_ex = json['inline_keyboard'][0][0]['url']
     result = json_ex.replace('https://porfirevich.ru/', 'https://porfirevich.ru/media/')+'.png'

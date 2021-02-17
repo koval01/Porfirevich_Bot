@@ -9,7 +9,7 @@ from aiogram.utils import executor
 from aiogram.utils.exceptions import Throttled
 
 import messages as msg
-from api import get_post_id_from_json, get_final_message
+from api import get_post_media_from_json, get_final_message
 from quotes_api import get_quote
 from random import randint
 from buttons import button_main_menu as button
@@ -54,7 +54,7 @@ async def process_callback_button1(callback_query: types.CallbackQuery):
 			text=msg.sending_photo,
 		)
 		await bot.send_chat_action(callback_query.from_user.id, 'upload_photo')
-		photo_data = await get_post_id_from_json(callback_query.message.reply_markup)
+		photo_data = await get_post_media_from_json(callback_query.message.reply_markup)
 		me = await bot.get_me()
 		await bot.send_photo(
 			chat_id=callback_query.from_user.id,
