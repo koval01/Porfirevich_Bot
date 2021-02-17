@@ -1,6 +1,6 @@
 # Porfirevich_Bot
 
-<h1 align="center">Добро пожаловать в [Porfirevich_Bot](https://t.me/porfirevich_bot) 👋</h1>
+<h1 align="center">Добро пожаловать в <a href="https://t.me/porfirevich_bot">Porfirevich_Bot</a> 👋</h1>
 <p align="center">
     Async Telegram Bot by Porfirevich.ru
     <br /><br />
