@@ -1,4 +1,4 @@
-TOKEN = 'PLACE YOUR TELEGRAM BOT TOKEN'
+TOKEN = '1691578043:AAEKNedwokKbz2KdAZohJcKOEec6B7FTGkg'
 API_URL = 'https://porfirevich.ru/api/story/?orderBy=RAND()&limit=1'
 DEEP_LN_URL = 'https://crimson-flower-a705.koval.workers.dev'
 QUOTES_API_URL = 'https://throbbing-paper-62c2.koval.workers.dev/'

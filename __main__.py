@@ -12,7 +12,7 @@ from aiogram.utils.exceptions import Throttled
 import hashlib
 import messages as msg
 
-from api import get_post_media_from_json, get_final_message, short_title_get
+from api import get_post_media_from_json, get_final_message, short_title_get, additional_answer
 from buttons import button_main_menu as button
 from config import TOKEN, LOGGING_CONFIG
 
@@ -106,7 +106,7 @@ async def handle_message_received(message_telegram):
 				logging.warning(e)
 				message, link = await get_final_message()
 				await message_telegram.reply(message, reply_markup=link)
-		# 	null
+			await additional_answer(message_telegram)
 
 		elif message_telegram.text == 'Как добавить свою запись?':
 			await message_telegram.reply(msg.info_text, reply_markup=msg.website_link)

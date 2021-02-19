@@ -80,6 +80,8 @@ async def get_final_message(inline = False) -> str:
 
 async def additional_answer_format() -> str:
     """Создание дополнения ответа бота цитатой или фактом"""
+    q_text = ''; f_text = ''
+
     if randint(0, 100) > QUOTE_CHANCE:
         try:
             q_text = await get_quote()
