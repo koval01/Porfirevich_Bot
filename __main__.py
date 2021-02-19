@@ -1,5 +1,4 @@
 import logging
-from random import randint
 from asyncio import get_event_loop
 
 from aiogram import Bot, types
@@ -14,7 +13,6 @@ import hashlib
 import messages as msg
 
 from api import get_post_media_from_json, get_final_message, short_title_get
-from quotes_api import get_quote
 from buttons import button_main_menu as button
 from config import TOKEN, LOGGING_CONFIG
 
@@ -108,12 +106,7 @@ async def handle_message_received(message_telegram):
 				logging.warning(e)
 				message, link = await get_final_message()
 				await message_telegram.reply(message, reply_markup=link)
-			if randint(0, 100) > 80:
-				try:
-					q_text = await get_quote()
-					await message_telegram.answer(q_text, disable_web_page_preview=True)
-				except Exception as e:
-					logging.error('Error sending quote (%s)' % e)
+		# 	null
 
 		elif message_telegram.text == 'Как добавить свою запись?':
 			await message_telegram.reply(msg.info_text, reply_markup=msg.website_link)

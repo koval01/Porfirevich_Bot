@@ -5,7 +5,7 @@ button_main_menu.add(KeyboardButton('🎲🎲'))
 button_main_menu.add(KeyboardButton('Как добавить свою запись?'))
 
 
-def create_inline_buttons(*button):
+def create_inline_buttons(*button) -> str:
     """Функция генерации Inline кнопок"""
 
     array_button = []

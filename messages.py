@@ -33,7 +33,7 @@ commands_main_menu = [
 ]
 
 
-async def foramatted_message(data, inline):
+async def foramatted_message(data, inline) -> str:
     """Формирование сообщения для пользователя"""
     text = await decoder(data['content'])
     likes = data['likesCount']
